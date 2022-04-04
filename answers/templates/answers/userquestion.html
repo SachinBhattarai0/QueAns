@@ -1,0 +1,46 @@
+{% extends 'main.html' %}
+<!--  -->
+{% block content %}
+<style>
+    .myquestions {
+        width: 70vw;
+    }
+    
+    .card {
+        margin-top: 10px;
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .edit-button {
+        padding: 0px 11px;
+        border-radius: 7px;
+    }
+</style>
+<!--  -->
+<div class="container myquestions" style="margin-top: 100px;">
+    {% for question in questions reversed %}
+    <div class="card">
+        <div class="card-header">
+            <div class="answerer-info" style="display:flex;">
+                {{question.time}}
+            </div>
+            <div class="user-action">
+                <a href="{% url 'editquestion' question.id %}"><button class="btn btn-outline-secondary edit-button">edit</button></a>
+                <a href="{% url 'deletequestion' question.id %}"><button class="btn btn-outline-danger edit-button">delete</button></a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <h5 class="card-title">{{question.title}}</h5>
+            <a href="{% url 'question' question.id %}" class="btn btn-primary">Answers</a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+{% endblock content %}

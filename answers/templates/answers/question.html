@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+<!--  -->
+{% block content %}
+<!--  -->
+{% for message in messages %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert" style="margin: 0;">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<!--  -->
+<div class="container answers bg-light " style="margin-top: 100px; border-radius: 8px;">
+    <div class="answer-container">
+        <div class="questioner-info" style="display:flex;">
+            <a href="{% url 'profile' question.questioner.username %}">
+                <img src="{{question.questioner.profiles.profile_pic.url}}" width="37px" height="37px">
+            </a>
+            <h6 class="modal-title" id="exampleModalLabel" style="line-height: 37px; color: #7c8080;">
+                {{question.questioner.username}}
+            </h6>
+        </div>
+        <h6 style="line-height: 37px; color: #7c8080; margin: 0;">{{question.time}}</h6>
+        <div class="title">{{question.title}}</div>
+        {% if question.question_image %}
+        <a href="{{question.question_image.url}}">
+            <img src="{{question.question_image.url}}" height="300px" style="border-radius: 7px;">
+        </a> <br>{% endif %}
+        <button class="answer btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#answerfield" aria-expanded="false" aria-controls="answerfield">Give Answers</button>
+        <button class="answer btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#showanswers" aria-expanded="false" aria-controls="showanswers">Read Answers</button>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="answerfield">
+                <div class="card card-body" style="width: 68vw;">
+                    <form action="{% url 'question' question.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{user.id}}" name="userid">
+                        <label for="floatingTextarea2" class="form-label">Enter Image Of Answer(OPTIONAL):</label>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="answer" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Enter Your Answer</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Enter Image Of Answer(OPTIONAL):</label>
+                            <input class="form-control" type="file" name="answer_image" id="formFile" accept="image/*">
+                        </div>
+                        <!-- <input class="btn btn-warning" type="button" value="Submit Answer"> -->
+                        <input class="btn btn-primary" type="submit" value="Submit Answer">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <div class="collapse multi-collapse" id="showanswers">
+                {% for answer in answers %}
+                <div class="card card-body" style="width: 68vw;">
+                    <div class="answerer-info" style="display:flex;">
+                        <a href="{% url 'profile' answer.answerer.username %}">
+                            <img src="{{answer.answerer.profiles.profile_pic.url}}" width="37px" height="37px">
+                        </a>
+                        <h6 class="modal-title" id="exampleModalLabel" style="line-height: 37px; color: #7c8080;">
+                            {{answer.answerer.username}}
+                        </h6>
+                    </div>
+                    <h6 style="line-height: 37px; color: #7c8080; margin: 0;">{{question.time}}</h6>
+
+                    <p>{{answer.answer}}</p>
+                    {% if answer.answer_image %}
+                    <a href="{{answer.answer_image.url}}">
+                        <img src="{{answer.answer_image.url}}" height="300px">
+                    </a><br>{% endif %}
+                    <hr>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+ {% extends 'main.html' %} {% load static %}
+<!--  -->
+<link rel="stylesheet" href="{% static 'styles/style.css' %}">
+<!--  -->
+{% block content %}
+<!--  -->
+{% if page == 'login' %}
+<!--  -->
+{% for message in messages %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <div class="loginRegister-container">
+        <h2>Login</h2>
+        <input type="text" placeholder="Enter username" name="username" class="nput-group-text">
+        <input type="password" name="password" placeholder="Enter Password">
+        <input type="submit" class="btn btn-primary" type="button" value="Login">
+        <p style="margin:3px 2px;"><a href="{% url 'reset_password' %}">Forgot Password</a></p>
+        <p style="margin:3px 2px;">Dont have a account?<a href="{% url 'register' %}">Register</a></p>
+    </div>
+</form>
+{% elif page == 'register' %}
+<!--  -->
+{% for message in messages %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert" style="margin: 0;">
+    <strong>{{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    <div class="loginRegister-container" style="padding: 60px 50px;">
+        <h2>Register</h2>
+        {% for field in form %} {{field}} {% endfor %}
+        <input type="submit" class="btn btn-primary" type="button" value="Register">
+        <p style="margin:3px 2px;">Already have a account?<a href="{% url 'login' %}">Login</a></p>
+    </div>
+</form>
+{% endif %} {% endblock content %}

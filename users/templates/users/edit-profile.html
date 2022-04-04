@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+<!--  -->
+{% block content %}
+<!--  -->
+<style>
+    .form-container {
+        padding: 30px;
+        margin: 20px;
+        border-radius: 10px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        width: 60vw;
+        border: 1px solid black;
+    }
+</style>
+
+<div class="form-container mt5" style="margin-top: 80px;">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %} {{form}}
+        <input type="submit" class="btn btn-primary mt-3">
+    </form>
+</div>
+
+{% endblock %}

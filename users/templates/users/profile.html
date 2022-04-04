@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+<!--  -->
+{% block content %}
+<!--  -->
+<style>
+    a {
+        color: black;
+    }
+    
+    i {
+        font-size: large;
+        margin: 0 5px 10px 0;
+        cursor: pointer;
+    }
+    
+    i:hover {
+        color: blue;
+    }
+</style>
+<!--  -->
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7 mt5">
+            <div class="card p-3 py-4">
+                {% if userinfo.username == user.username %}
+                <a href="{% url 'editprofile' %}">
+                    <button type="button" class="btn btn-outline-secondary profile-edit">edit</button>
+                </a>
+                {% endif %}
+                <div class="text-center"> <img src="{{userinfo.profiles.profile_pic.url }}" height="120" width="120"> </div>
+                <div class="text-center mt-3">
+                    <h5 class="mt-2 mb-0">{{userinfo.username}}</h5>
+                    <!--  -->
+                    <span>{{userinfo.profiles.short_intro}}</span>
+                    <div class="px-4 mt-1">
+                        <p class="fonts">
+                            {{userinfo.profiles.bio}}
+                        </p>
+                    </div>
+                    <div class="social-media">
+                        <a href="{{ userinfo.profiles.facebook_link }}"><i class="fab fa-facebook-f "></i></a>
+                        <a href="{{ userinfo.profiles.linkedin_link }} "><i class="fab fa-linkedin-in "></i></a>
+                        <a href="{{ userinfo.profiles.twitter_link }} "><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <!-- <div class=" buttons ">
+                        <button class="btn btn-outline-primary px-4 ">Message</button>
+                        <button class="btn btn-primary px-4 ms-3 ">Contact</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
